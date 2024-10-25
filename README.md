@@ -1,7 +1,9 @@
 
 # tmux-fzf-pane-switch
 
-This plugin is like the [brokenricefilms/tmux-fzf-session-switch](https://github.com/brokenricefilms/tmux-fzf-session-switch) TPM plugin, but it's for pane switching.
+[![asciicast](https://asciinema.org/a/lRfrNLEL5WhqAgNsMnNw4zxY7.svg)](https://asciinema.org/a/lRfrNLEL5WhqAgNsMnNw4zxY7)
+
+This plugin is like the [brokenricefilms/tmux-fzf-session-switch](https://github.com/brokenricefilms/tmux-fzf-session-switch) TPM plugin, but it's for pane switching. Switch to any pane, in any session.
 
 I use tmux sessions with many panes open, and I wanted a way of using fzf to switch to a pane quickly by filtering on the `#{window_name}`, `#{pane_title}`, or `#{pane_current_command}"`. If a pane cannot be found using the search criteria, it'll offer to create a new pane in the current session.
 
@@ -63,6 +65,17 @@ set -g @fzf_pane_switch_preview-pane-position "position"
 ```
 
 Default is `right,,,nowrap`. You can use any options allowed [here](https://man.archlinux.org/man/fzf.1.en#preview~3).
+
+## Demo Configuration
+
+The demo video was captured using [asciinema](https://asciinema.org).
+
+* TMUX theme is [catppuccin](https://github.com/catppuccin/tmux) (didn't render all that well in asciinema, but it's great!)
+* ZSH shell prompt is [starship](https://starship.rs)
+* Some of the content in the active panes:
+
+  * [neofetch](https://github.com/dylanaraps/neofetch)
+  * `curl wttr.in`
 
 ## Acknowledgments
 
