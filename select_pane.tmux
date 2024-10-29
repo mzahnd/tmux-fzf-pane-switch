@@ -7,12 +7,14 @@ default_bind_key='s'
 default_preview_pane='true'
 default_fzf_window_position='center,70%,80%'
 default_fzf_preview_window_position='right,,,nowrap'
+default_tmux_list_panes_format='session_name window_name pane_title pane_current_command'
 
 # User overridable options
 tmux_bind_key="@fzf_pane_switch_bind-key"
 tmux_preview_pane="@fzf_pane_switch_preview-pane"
 tmux_fzf_window_position="@fzf_pane_switch_window-position"
 tmux_fzf_preview_window_position="@fzf_pane_switch_preview-pane-position"
+tmux_list_panes_format="@fzf_pane_switch_list-panes-format"
 
 # Function to get variables from tmux
 get_tmux_option() {
@@ -37,7 +39,9 @@ function set_switch_pane_bindings {
     fzf_window_position=$(get_tmux_option "${tmux_fzf_window_position}" "${default_fzf_window_position}")
     local fzf_preview_window_position
     fzf_preview_window_position=$(get_tmux_option "${tmux_fzf_preview_window_position}" "${default_fzf_preview_window_position}")
+    local list_panes_format
+    list_panes_format=$(get_tmux_option "${tmux_list_panes_format}" "${default_tmux_list_panes_format}")
 
-    tmux bind-key "${bind_key}" run-shell "${CURRENT_DIR}/select_pane.sh ${preview_pane} ${fzf_window_position} ${fzf_preview_window_position}"
+    tmux bind-key "${bind_key}" run-shell "${CURRENT_DIR}/select_pane.sh ${preview_pane} ${fzf_window_position} ${fzf_preview_window_position} '${list_panes_format}'"
 }
 set_switch_pane_bindings

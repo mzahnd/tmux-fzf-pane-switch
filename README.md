@@ -66,6 +66,18 @@ set -g @fzf_pane_switch_preview-pane-position "position"
 
 Default is `right,,,nowrap`. You can use any options allowed [here](https://man.archlinux.org/man/fzf.1.en#preview~3).
 
+### tmux list-panes format
+
+This is the output format of `tmux list-panes` that you see in the fzf window. You can use this to match on other tmux formats.
+
+```bash
+set -g @fzf_pane_switch_list-panes-format "FORMATS"
+```
+
+Default is `session_name window_name pane_title pane_current_command`.
+
+Note: The `list-panes` format will always start with `pane_id` as that what's passed into `switch-client` to allow switching on matched panes. You can use any tmux FORMAT options allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS).
+
 ## Demo Configuration
 
 The demo video was captured using [asciinema](https://asciinema.org).
