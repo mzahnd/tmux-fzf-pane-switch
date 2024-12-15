@@ -6,21 +6,32 @@
 function select_pane() {
     local pane
     local pane_id
+    local current_pane
+
+    # Save the currently active pane ID
+    current_pane=$(tmux display-message -p '#{pane_id}')
 
     # Check if we're using the fzf preview pane
     if [[ "${1}" = 'true' ]]; then
         pane=$(tmux list-panes -aF "${4}" | 
-           fzf --exit-0 --bind=enter:replace-query+print-query --reverse --tmux "${2}" --preview='tmux capture-pane -ep -t {1}' --preview-label='pane preview' --preview-window="${3}")
+            awk '{$1=substr($1, 2); print}' | 
+            fzf --exit-0 --bind=enter:replace-query+print-query --reverse --tmux "${2}" --preview='tmux capture-pane -ep -t %{1}' --preview-label='pane preview' --preview-window="${3}")
     else
         pane=$(tmux list-panes -aF "${4}" | 
-           fzf --exit-0 --bind=enter:replace-query+print-query --reverse --tmux "${2}")
+            awk '{$1=substr($1, 2); print}' | 
+            fzf --exit-0 --bind=enter:replace-query+print-query --reverse --tmux "${2}")
     fi
 
-    # Check if pane exists
+    # Set pane_id to first part of fzf output
     pane_id=$(echo "${pane}" | awk '{print $1}')
-    if tmux has-session -t "${pane_id}" >/dev/null 2>&1; then
+
+    # If pane_id is empty, exit without changing pane
+    if [[ -z "${pane_id}" ]]; then
+        tmux switch-client -t "${current_pane}"
+    # Check if pane exists
+    elif tmux has-session -t "%${pane_id}" >/dev/null 2>&1; then
         # Found it! Let's switch.
-        tmux switch-client -t "${pane_id}"
+        tmux switch-client -t "%${pane_id}"
     else
         # Pane not found, let's create it.
         tmux command-prompt -b -p "Press ENTER to create a new window in the current session [${pane}]" "new-window -n \"${pane}\""
