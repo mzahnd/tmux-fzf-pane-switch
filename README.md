@@ -38,7 +38,7 @@ You can override the following options in your `tmux.conf` file.
 set -g @fzf_pane_switch_bind-key "key binding"
 ```
 
-Default is `s`, which replaces the tmux default session select (tmux default: `choose-tree -Zs -O name`)
+Default is `prefix + s`, which replaces the tmux default session select (tmux default: `choose-tree -Zs -O name`)
 
 ### fzf window position
 
@@ -74,9 +74,9 @@ This is the output format of `tmux list-panes` that you see in the fzf window. Y
 set -g @fzf_pane_switch_list-panes-format "FORMATS"
 ```
 
-Default is `session_name window_name pane_title pane_current_command`.
+Default is `pane_id session_name window_name pane_title pane_current_command`.
 
-Note: The `list-panes` format will always start with `pane_id` as that what's passed into `switch-client` to allow switching on matched panes. You can use any tmux FORMAT options allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS).
+Note: You can use any tmux FORMAT option allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS). String manipulation should also work. For example, the `pane_id` by default is shown with a leading percent symbol (e.g. `%3`). You can remove this by setting `set -g @fzf_pane_switch_list-panes-format "s/%//:pane_id session_name window_name pane_title pane_current_command"`
 
 ## Demo Configuration
 
