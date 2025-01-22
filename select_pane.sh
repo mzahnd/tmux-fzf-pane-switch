@@ -4,23 +4,36 @@
 # If you press ENTER, it switches to the selected pane.
 # If you press ENTER on an empty line, it creates a new window in the current session.
 function select_pane() {
+    local border_styling
+    local current_pane
     local pane
     local pane_id
-    local current_pane
+    local preview
 
     # Save the currently active pane ID
     current_pane=$(tmux display-message -p '#{pane_id}')
 
+    # If we have fzf version 0.58.0 or later, we can enable border styling
+    vercomp '0.58.0' "$(fzf --version | awk '{print $1}')"
+    fzf_version_comparison=$?
+    if [[ $fzf_version_comparison -ne 1 ]]; then
+        border_styling="--input-border --input-label ' Search ' \
+        --list-border --list-label ' Panes ' \
+        --preview-border --preview-label ' Preview '"
+    else
+        # Fallback to old border styling used in tmux-fzf-pane-switch v1.1.2
+        border_styling="--preview-label='pane preview'"
+    fi
+
     # Check if we're using the fzf preview pane
     if [[ "${1}" = 'true' ]]; then
-        pane=$(tmux list-panes -aF "${4}" | 
-            fzf --exit-0 --print-query --reverse --tmux "${2}" --with-nth=2.. --preview='tmux capture-pane -ep -t {1}' --preview-label='pane preview' --preview-window="${3}" | 
-            tail -1)
-    else
-        pane=$(tmux list-panes -aF "${4}" | 
-            fzf --exit-0 --print-query --reverse --tmux "${2}" --with-nth=2.. | 
-            tail -1)
+        preview="--preview 'tmux capture-pane -ep -t {1}' --preview-window=${3}"
     fi
+
+    # Launch switcher
+    pane=$(tmux list-panes -aF "${4}" | 
+        eval fzf --exit-0 --print-query --reverse --tmux "${2}" --with-nth=2.. "${border_styling}" "${preview}" | 
+        tail -1)
 
     # Set pane_id to first part of fzf output
     pane_id=$(echo "${pane}" | awk '{print $1}')
@@ -36,6 +49,32 @@ function select_pane() {
         # Pane not found, let's create it.
         tmux command-prompt -b -p "Press ENTER to create a new window in the current session [${pane}]" "new-window -n \"${pane}\""
     fi
+}
+
+function vercomp() {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if ((10#${ver1[i]:=0} > 10#${ver2[i]:=0}))
+        then
+            return 1
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+    done
+    return 0
 }
 
 # Pane preview
