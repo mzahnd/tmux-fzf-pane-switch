@@ -1,16 +1,19 @@
-
 # tmux-fzf-pane-switch
 
-[![asciicast](https://asciinema.org/a/lRfrNLEL5WhqAgNsMnNw4zxY7.svg)](https://asciinema.org/a/lRfrNLEL5WhqAgNsMnNw4zxY7)
+![Screenshot of the fzf window listing all tmux panes for selection and switching.](assets/screenshot.png)
+
+Switch to any TMUX pane, in any session, by searching and filtering using fzf.
+
+Search and filter on any pane details, such as (but not limited to) the `#{window_name}`, `#{pane_title}`, or `#{pane_current_command}"`. If a pane cannot be found using the search criteria, the plugin will offer to create a new window in the current session.
 
 This plugin is like the [brokenricefilms/tmux-fzf-session-switch](https://github.com/brokenricefilms/tmux-fzf-session-switch) TPM plugin, but it's for pane switching. Switch to any pane, in any session.
-
-I use tmux sessions with many panes open, and I wanted a way of using fzf to switch to a pane quickly by filtering on the `#{window_name}`, `#{pane_title}`, or `#{pane_current_command}"`. If a pane cannot be found using the search criteria, it'll offer to create a new pane in the current session.
 
 ## Requirements
 
 * [fzf](https://github.com/junegunn/fzf) >= 0.53.0 (requires the `--tmux` option). I tested with 0.55.0.
 * [tmux](https://github.com/tmux/tmux) >= 3.3. I tested with 3.3a.
+
+To get the border styling as shown in the image above, you need fzf version >= 0.58.0.
 
 ## Installation
 
@@ -78,16 +81,12 @@ Default is `pane_id session_name window_name pane_title pane_current_command`.
 
 Note: You can use any tmux FORMAT option allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS). String manipulation should also work. For example, the `pane_id` by default is shown with a leading percent symbol (e.g. `%3`). You can remove this by setting `set -g @fzf_pane_switch_list-panes-format "s/%//:pane_id session_name window_name pane_title pane_current_command"`
 
-## Demo Configuration
+## Tools used in image
 
-The demo video was captured using [asciinema](https://asciinema.org).
-
-* TMUX theme is [catppuccin](https://github.com/catppuccin/tmux) (didn't render all that well in asciinema, but it's great!)
+* Terminal is [Ghostty](https://ghostty.org)
+* TMUX theme is [catppuccin](https://github.com/catppuccin/tmux)
 * ZSH shell prompt is [starship](https://starship.rs)
-* Some of the content in the active panes:
-
-  * [neofetch](https://github.com/dylanaraps/neofetch)
-  * `curl wttr.in`
+* `ls` output in pane is [eza](https://github.com/eza-community/eza)
 
 ## Acknowledgments
 
