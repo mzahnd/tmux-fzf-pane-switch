@@ -84,8 +84,9 @@ Note: You can use any tmux FORMAT option allowed [here](https://www.man7.org/lin
 ## Tools used in image
 
 * Terminal is [Ghostty](https://ghostty.org)
-* TMUX theme is [catppuccin](https://github.com/catppuccin/tmux)
+* TMUX theme is [catppuccin](https://github.com/catppuccin/tmux) mocha.
 * ZSH shell prompt is [starship](https://starship.rs)
+* `fzf` theme is [catppuccin](https://github.com/catppuccin/fzf) mocha.
 * `ls` output in pane is [eza](https://github.com/eza-community/eza)
 
 ## Acknowledgments
