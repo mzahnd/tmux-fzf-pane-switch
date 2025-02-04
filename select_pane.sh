@@ -17,7 +17,7 @@ function select_pane() {
     vercomp '0.58.0' "$(fzf --version | awk '{print $1}')"
     fzf_version_comparison=$?
     if [[ $fzf_version_comparison -ne 1 ]]; then
-        border_styling="--input-border --input-label ' Search ' \
+        border_styling="--input-border --input-label ' Search ' --info=inline-right \
         --list-border --list-label ' Panes ' \
         --preview-border --preview-label ' Preview '"
     else
