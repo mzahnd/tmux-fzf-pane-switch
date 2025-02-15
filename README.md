@@ -6,14 +6,13 @@ Switch to any TMUX pane, in any session, by searching and filtering using fzf.
 
 Search and filter on any pane details, such as (but not limited to) the `#{window_name}`, `#{pane_title}`, or `#{pane_current_command}"`. If a pane cannot be found using the search criteria, the plugin will offer to create a new window in the current session.
 
-This plugin is like the [brokenricefilms/tmux-fzf-session-switch](https://github.com/brokenricefilms/tmux-fzf-session-switch) TPM plugin, but it's for pane switching. Switch to any pane, in any session.
-
 ## Requirements
 
 * [fzf](https://github.com/junegunn/fzf) >= 0.53.0 (requires the `--tmux` option). I tested with 0.55.0.
 * [tmux](https://github.com/tmux/tmux) >= 3.3. I tested with 3.3a.
 
-To get the border styling as shown in the image above, you need fzf version >= 0.58.0.
+> [!NOTE]
+> To get the border styling as shown in the image above, you need fzf version >= 0.58.0.
 
 ## Installation
 
@@ -79,7 +78,8 @@ set -g @fzf_pane_switch_list-panes-format "FORMATS"
 
 Default is `pane_id session_name window_name pane_title pane_current_command`.
 
-Note: You can use any tmux FORMAT option allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS). String manipulation should also work. For example, the `pane_id` by default is shown with a leading percent symbol (e.g. `%3`). You can remove this by setting `set -g @fzf_pane_switch_list-panes-format "s/%//:pane_id session_name window_name pane_title pane_current_command"`
+> [!TIP]
+> You can use any tmux FORMAT option allowed [here](https://www.man7.org/linux/man-pages/man1/tmux.1.html#FORMATS). String manipulation should also work. For example, the `pane_id` by default is shown with a leading percent symbol (e.g. `%3`). You can remove this by setting `set -g @fzf_pane_switch_list-panes-format "s/%//:pane_id session_name window_name pane_title pane_current_command"`
 
 ## Tools used in image
 
